@@ -8,6 +8,7 @@ export default function useVisualMode(initial) {
     if (replace) {
       history.pop();
     }
+    // console.log("mode",mode)
     setMode(mode);
     setHistory([...history, mode])
   }
@@ -18,6 +19,7 @@ export default function useVisualMode(initial) {
       setMode(history[history.length-1]);
     }
   }
+  // console.log("mode",mode, history)
 
   return { mode, transition, back };
 }
