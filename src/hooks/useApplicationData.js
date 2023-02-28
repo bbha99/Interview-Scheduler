@@ -21,18 +21,12 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-    return axios.put(`/api/appointments/${id}`, { interview })
-    .then((response) => {
-      if (!state.appointments[id].interview) {
-        const objIndex = state.days.findIndex((d => d.name === state.day));
+    const stateWithAppointments = { ...state, appointments };
+    const stateWithDays = updateSpots(stateWithAppointments);
 
-        const days = [...state.days];
-    
-        days[objIndex].spots--;
-        setState({ ...state, appointments, days});
-      } else {
-        setState({ ...state, appointments});
-      }
+    return axios.put(`/api/appointments/${id}`, { interview })
+      .then((response) => {
+        setState(stateWithDays);
         return response.status;
       })
       .catch((response) => {
@@ -51,21 +45,37 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
-    const objIndex = state.days.findIndex((d => d.name === state.day));
-
-    const days = [...state.days];
-
-    days[objIndex].spots++;
+    const stateWithAppointments = { ...state, appointments };
+    const stateWithDays = updateSpots(stateWithAppointments);
 
     return axios.delete(`/api/appointments/${id}`, { id })
       .then((response) => {
-        setState({ ...state, appointments, days });
+        setState(stateWithDays);
         return response.status;
       })
       .catch((response) => {
         throw new Error(response.status);
       });
   }
+
+  const updateSpots = (state) => {
+    // Find the current day object and index from the array of days
+    const selectedDay = state.days.find((day) => day.name === state.day);
+    const selectedDayIndex = state.days.findIndex((day => day.name === state.day));
+
+    // Get the list of appointments for the selected day
+    const appointmentsList = selectedDay.appointments.map((appointmentId) => state.appointments[appointmentId]);
+
+    // Spots remaining where no appointment is booked (null)
+    const availableSpots = appointmentsList.filter((appointment) => appointment.interview === null);
+    const spotsAvailable = availableSpots.length;
+
+    const newSelectedDay = {...selectedDay, spots: spotsAvailable}
+
+    const days = [...state.days];
+    days[selectedDayIndex] = newSelectedDay;
+    return {...state, days};
+  };
 
   const setDay = day => setState({ ...state, day });
   // const setDays = days => setState(prev => ({ ...prev, days }));
@@ -81,9 +91,10 @@ export default function useApplicationData() {
     });
   }, []);
 
-  return {     
+  return {
     state,
     setDay,
     bookInterview,
-    cancelInterview };
+    cancelInterview
+  };
 }
