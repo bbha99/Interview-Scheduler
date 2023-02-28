@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function Show(props) {
-  console.log("props.interviewer", props.interviewer)
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">
@@ -30,9 +29,3 @@ export default function Show(props) {
     </main>
   );
 }
-
-const interviewer = {
-  id: 1,
-  name: "Sylvia Palmer",
-  avatar: "https://i.imgur.com/LpaY82x.png"
-};

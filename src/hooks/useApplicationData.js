@@ -11,7 +11,6 @@ export default function useApplicationData() {
   });
 
   function bookInterview(id, interview) {
-    // console.log(id, interview);
     const appointment = {
       ...state.appointments[id],
       interview: { ...interview }
@@ -23,13 +22,20 @@ export default function useApplicationData() {
     };
 
     return axios.put(`/api/appointments/${id}`, { interview })
-      .then((response) => {
-        // console.log("successful", response);
-        setState({ ...state, appointments });
+    .then((response) => {
+      if (!state.appointments[id].interview) {
+        const objIndex = state.days.findIndex((d => d.name === state.day));
+
+        const days = [...state.days];
+    
+        days[objIndex].spots--;
+        setState({ ...state, appointments, days});
+      } else {
+        setState({ ...state, appointments});
+      }
         return response.status;
       })
       .catch((response) => {
-        // console.log("catch", response);
         throw new Error(response.status);
       });
   }
@@ -45,9 +51,15 @@ export default function useApplicationData() {
       [id]: appointment
     };
 
+    const objIndex = state.days.findIndex((d => d.name === state.day));
+
+    const days = [...state.days];
+
+    days[objIndex].spots++;
+
     return axios.delete(`/api/appointments/${id}`, { id })
       .then((response) => {
-        setState({ ...state, appointments });
+        setState({ ...state, appointments, days });
         return response.status;
       })
       .catch((response) => {
@@ -59,18 +71,15 @@ export default function useApplicationData() {
   // const setDays = days => setState(prev => ({ ...prev, days }));
 
   useEffect(() => {
-    const daysURL = `/api/days`;
 
     Promise.all([
       axios.get('/api/days'),
       axios.get('/api/appointments'),
       axios.get('/api/interviewers')
     ]).then((all) => {
-      // console.log(all);
       setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
     });
   }, []);
-  // console.log(state.interviewers)
 
   return {     
     state,
