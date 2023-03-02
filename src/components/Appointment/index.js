@@ -48,25 +48,16 @@ export default function Appointment(props) {
      .catch(error => transition(ERROR_DELETE, true));
    }
 
-  function confirmDeleteAppointment() {
-    transition("CONFIRM");
-
-  }
-
-  function cancelDeleteAppointment() {
-    transition("SHOW");
-  }
-
-
   return (
-    <article className="appointment">
+    <article className="appointment"
+    data-testid="appointment">
       <Header time={props.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
-          onDelete={confirmDeleteAppointment}
+          onDelete={() => transition(CONFIRM)}
           onEdit={() => transition(EDIT)}
         />
       )}
@@ -92,7 +83,7 @@ export default function Appointment(props) {
       {mode === CONFIRM && (
         <Confirm
           message="Are you sure you would like to delete?"
-          onCancel={cancelDeleteAppointment}
+          onCancel={() => transition(SHOW)}
           onConfirm={destroy}
         />
       )}

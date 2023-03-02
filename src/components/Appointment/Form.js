@@ -35,7 +35,7 @@ export default function Form(props) {
         }))
       );
     }
-
+    setError("");
     props.onSave(student, interviewer);
     // return (!student || !interviewer ? setError((prev) => ({
     //   ...prev,
