@@ -18,20 +18,11 @@ import Appointment from "components/Appointment";
 /*
   A test that renders a React Component
 */
-it("renders without crashing", () => {
-  render(<Application />);
-});
+
 
 describe("Appointment", () => {
   it("renders without crashing", () => {
     render(<Appointment />);
   });
 
-  it.skip("does something it is supposed to do", () => {
-    // ...
-  });
-
-  it.skip("does something else it is supposed to do", () => {
-    // ...
-  });
 });
