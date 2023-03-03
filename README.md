@@ -26,10 +26,10 @@ npm run storybook
 
 ## Final Product
 
-!["screenshot of creating an appointment"](https://github.com/bbha99/Interview-Scheduler/blob/master/docs/creating-appointment.png?raw=true)
-!["screenshot of saving an appointment"](https://github.com/bbha99/Interview-Scheduler/blob/master/docs/saving-appointment.png?raw=true)
-!["screenshot of cancelling an appointment"](https://github.com/bbha99/Interview-Scheduler/blob/master/docs/cancel-appointment.png?raw=true)
-!["screenshot of error cancelling an appointment"](https://github.com/bbha99/Interview-Scheduler/blob/master/docs/cancel-error.png?raw=true)
+!["screenshot of creating an appointment"](https://github.com/bbha99/Interview-Scheduler/blob/master/doc/creating-appointment.png?raw=true)
+!["screenshot of saving an appointment"](https://github.com/bbha99/Interview-Scheduler/blob/master/doc/saving-appointment.png?raw=true)
+!["screenshot of cancelling an appointment"](https://github.com/bbha99/Interview-Scheduler/blob/master/doc/cancel-appointment.png?raw=true)
+!["screenshot of error cancelling an appointment"](https://github.com/bbha99/Interview-Scheduler/blob/master/doc/cancel-error.png?raw=true)
 
 ## Dependencies
 
