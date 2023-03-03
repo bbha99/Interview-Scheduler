@@ -1,3 +1,4 @@
+// Contains the logic for the application component
 import { useState, useEffect } from "react";
 import axios from "axios";
 

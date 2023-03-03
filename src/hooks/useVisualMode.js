@@ -1,3 +1,4 @@
+// Set the current mode of the appointment component
 import { useState } from "react";
 
 export default function useVisualMode(initial) {
